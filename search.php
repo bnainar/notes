@@ -61,26 +61,37 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && !empty($_GET["note"])) {
 <body>
     <div class="mx-auto pt-5" style="max-width:700px">
         <h1>Search results for "<?= $term ?>"</h1>
+        <?php if ($res->num_rows === 0) : ?>
 
-        <?php foreach ($arr as $note) : ?>
-            <a href="note.php?id=<?= $note[0] ?>">
-                <div class="card my-4 shadow-sm" style="width:25rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <?= $note[1] ?>
-                            <?php if ($note[3] != "") : ?>
-                                <span class="badge bg-secondary">
-                                    <?= $note[3] ?>
-                                </span>
+            <img src="./Humaaans - Sitting.png" class="rounded mx-auto " alt="No notes found for the search term">
+            <h5 class="my-4"> No results are found. Try again with a different term</h5> <?php else : ?>
+
+            <?php foreach ($arr as $note) : ?>
+                <a href="note.php?id=<?= $note[0] ?>">
+                    <div class="card my-4 shadow-sm" style="width:25rem;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">
+                                    <?= $note[1] ?>
+                                    <?php if ($note[3] != "") : ?>
+                                        <span class="badge bg-secondary">
+                                            <?= $note[3] ?>
+                                        </span>
+                                </h5>
                             <?php endif; ?>
-                        </h5>
-                        <div class="card-text">
-                            <?= $note[2] ?>
+                            <a href="delete.php?id=<?= $note[0] ?>">
+                                <button type="button" class="btn-close" aria-label="Close"></button>
+                            </a>
+                            </div>
+
+                            <div class="card-text">
+                                <?= $note[2] ?>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-        <?php endforeach; ?>
+                </a>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <a href="index.php"><button class="btn btn-primary">See all Notes</button></a>
 </body>
 

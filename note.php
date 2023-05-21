@@ -39,6 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"])) {
             min-height: 100%;
         }
 
+        p {
+            font-weight: 600;
+            font-size: large;
+        }
+
         #cont {
             position: relative;
             height: 500px;
@@ -50,7 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"])) {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            /* From https://css.glass */
             background: rgba(255, 255, 255, 0.32);
             border-radius: 16px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -70,23 +74,47 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"])) {
 <body>
     <div id="cont">
         <div class="pt-5 center-block" style="width:500px" id="card">
-            <h1>
-                <?= $note[1] ?>
+            <div class="d-flex justify-content-between">
+                <h1 id="title">
+                    <?= $note[1] ?>
 
-            </h1>
+                </h1>
+                <a href="delete.php?id=<?= $note[0] ?>">
+                    <button type="button" class="btn-close" aria-label="Close"></button>
+                </a>
+            </div>
             <?php if ($note[3] != "") : ?>
-                <h3>
+                <h4>
                     <span class="badge bg-secondary">
                         <?= $note[3] ?>
                     </span>
-                </h3>
+                </h4>
             <?php endif; ?>
-            <p>
+
+            <p class="mb-4" id="content">
                 <?= $note[2] ?>
             </p>
             <a href="edit.php?id=<?= $note[0] ?>"><button class="btn btn-primary">Edit</button></a>
+            <a href="index.php"><button class="btn btn-secondary mx-3">See all Notes</button></a>
+            <button class="btn btn-secondary" id="sharebtn">Share</button>
         </div>
     </div>
+    <script>
+        const title = document.getElementById("title").textContent.trim();
+        const text = document.getElementById("content").textContent.trim();
+        console.log(title);
+        console.log(text);
+        const btn = document.getElementById("sharebtn");
+        const shareData = {
+            title,
+            text
+        };
+        btn.addEventListener("click", async () => {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {}
+        });
+    </script>
 </body>
 
 </html>
