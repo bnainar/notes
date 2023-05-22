@@ -26,7 +26,7 @@ $arr = $res->fetch_all();
             background-color: #ccd5ae;
         }
 
-        /* <!-- <pp if ($res->num_rows === 0) : ?> --> */
+
         div.card:hover {
             box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
         }
@@ -45,7 +45,7 @@ $arr = $res->fetch_all();
         <div class="row gx-5">
             <div class="col">
 
-                <?php if (true) : ?>
+                <?php if ($res->num_rows === 0) : ?>
                     <img src="./Humaaans - Standing.png" class="rounded mx-auto d-block" alt="No notes are created">
                     <h5 class="my-4"> There are no notes. Create some!</h5>
                 <?php else : ?>
